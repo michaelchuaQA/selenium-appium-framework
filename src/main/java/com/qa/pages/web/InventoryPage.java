@@ -41,13 +41,15 @@ public class InventoryPage extends BasePage {
     @Step("Add {productName} to cart")
     public void addProductToCart(String productName) {
         String dataTest = "add-to-cart-" + productName.toLowerCase().replace(" ", "-");
-        driver.findElement(By.cssSelector("[data-test='" + dataTest + "']")).click();
+        By locator = By.cssSelector("[data-test='" + dataTest + "']");
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
     @Step("Remove {productName} from cart")
     public void removeProductFromCart(String productName) {
         String dataTest = "remove-" + productName.toLowerCase().replace(" ", "-");
-        driver.findElement(By.cssSelector("[data-test='" + dataTest + "']")).click();
+        By locator = By.cssSelector("[data-test='" + dataTest + "']");
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
     @Step("Get cart badge count")
