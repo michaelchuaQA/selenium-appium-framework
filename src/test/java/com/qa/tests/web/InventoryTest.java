@@ -32,7 +32,7 @@ public class InventoryTest extends WebBaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify adding item to cart updates cart badge")
     public void testAddItemToCart() {
-        inventoryPage.addBackpackToCart();
+        inventoryPage.addProductToCart("Sauce Labs Backpack");
 
         Assert.assertEquals(inventoryPage.getCartBadgeCount(), "1");
     }

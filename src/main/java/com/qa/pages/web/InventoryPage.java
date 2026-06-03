@@ -3,11 +3,12 @@ package com.qa.pages.web;
 import com.qa.base.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.time.Duration;
 import java.util.List;
 
 public class InventoryPage extends BasePage {
@@ -21,8 +22,7 @@ public class InventoryPage extends BasePage {
     @FindBy(className = "shopping_cart_link")
     private WebElement cartLink;
 
-    @FindBy(className = "shopping_cart_badge")
-    private WebElement cartBadge;
+    private static final By CART_BADGE = By.className("shopping_cart_badge");
 
     public InventoryPage(WebDriver driver) {
         super(driver);
@@ -52,15 +52,15 @@ public class InventoryPage extends BasePage {
 
     @Step("Get cart badge count")
     public String getCartBadgeCount() {
-        return getText(cartBadge);
+        WebElement badge = wait.until(ExpectedConditions.visibilityOfElementLocated(CART_BADGE));
+        return badge.getText();
     }
 
     @Step("Check if cart badge is visible")
     public boolean isCartBadgeVisible() {
-        try {
-            return cartBadge.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+        boolean visible = !driver.findElements(CART_BADGE).isEmpty();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        return visible;
     }
 }
