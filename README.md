@@ -65,7 +65,19 @@ src/
 
 ## Test Execution Results
 
-### BDD Cucumber Test Run (12 Scenarios - All Passing)
+### Cucumber HTML Report (12 Scenarios - 100% Passed)
+
+![Cucumber Report](docs/screenshots/cucumber-report.png)
+
+A detailed Cucumber HTML report is generated after each test run with step-by-step results, timing, and screenshots on failure.
+
+### CI/CD Pipeline
+
+![CI Pipeline](docs/screenshots/ci-pipeline.png)
+
+GitHub Actions runs tests automatically on every push and pull request.
+
+### Sample Test Output
 
 ```
 Scenario: Successful login with valid credentials
@@ -80,12 +92,6 @@ Scenario: Login fails with locked out user
   When I enter username "locked_out_user" and password "secret_sauce"                  ✓
   And I click the login button                                                         ✓
   Then I should see an error message containing "Sorry, this user has been locked out" ✓
-
-Scenario: Login fails with invalid credentials
-  Given I am on the SauceDemo login page                                             ✓
-  When I enter username "invalid_user" and password "wrong_password"                 ✓
-  And I click the login button                                                       ✓
-  Then I should see an error message containing "Username and password do not match" ✓
 
 Scenario: Inventory page displays all products
   Given I am on the SauceDemo login page                            ✓
@@ -103,12 +109,6 @@ Scenario: Add a single item to the cart
 Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
 BUILD SUCCESS (25s)
 ```
-
-### Cucumber HTML Report
-
-A detailed Cucumber HTML report is generated after each test run with step-by-step results, timing, and screenshots on failure.
-
-[View Sample Report](docs/reports/cucumber-report.html)
 
 ## BDD Feature File Examples
 
