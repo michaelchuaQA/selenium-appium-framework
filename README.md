@@ -1,5 +1,11 @@
 # Selenium + Appium Test Automation Framework
 
+![CI](https://github.com/michaelchuaQA/selenium-appium-framework/actions/workflows/web-tests.yml/badge.svg)
+![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk)
+![Selenium](https://img.shields.io/badge/Selenium-4-43B02A?logo=selenium)
+![Appium](https://img.shields.io/badge/Appium-9-662D91?logo=appium)
+![Cucumber](https://img.shields.io/badge/Cucumber-BDD-23D96C?logo=cucumber)
+
 A comprehensive test automation framework for **web** and **mobile** testing using Selenium, Appium, TestNG, and **Cucumber BDD** with the Page Object Model design pattern.
 
 ## Tech Stack
@@ -51,11 +57,58 @@ src/
 
 ## Design Patterns
 
-- **Behavior-Driven Development (BDD)** — Gherkin feature files with Given/When/Then syntax
-- **Page Object Model (POM)** — each page/screen is a class with locators and actions
-- **Factory Pattern** — DriverFactory and MobileDriverFactory manage driver lifecycle
-- **Thread-safe drivers** — ThreadLocal ensures parallel test execution
-- **Base Page abstraction** — common interactions (click, type, wait) in one place
+- **Behavior-Driven Development (BDD)** -- Gherkin feature files with Given/When/Then syntax
+- **Page Object Model (POM)** -- each page/screen is a class with locators and actions
+- **Factory Pattern** -- DriverFactory and MobileDriverFactory manage driver lifecycle
+- **Thread-safe drivers** -- ThreadLocal ensures parallel test execution
+- **Base Page abstraction** -- common interactions (click, type, wait) in one place
+
+## Test Execution Results
+
+### BDD Cucumber Test Run (12 Scenarios - All Passing)
+
+```
+Scenario: Successful login with valid credentials
+  Given I am on the SauceDemo login page                            ✓
+  When I enter username "standard_user" and password "secret_sauce" ✓
+  And I click the login button                                      ✓
+  Then I should be redirected to the inventory page                 ✓
+  And the page title should be "Products"                           ✓
+
+Scenario: Login fails with locked out user
+  Given I am on the SauceDemo login page                                               ✓
+  When I enter username "locked_out_user" and password "secret_sauce"                  ✓
+  And I click the login button                                                         ✓
+  Then I should see an error message containing "Sorry, this user has been locked out" ✓
+
+Scenario: Login fails with invalid credentials
+  Given I am on the SauceDemo login page                                             ✓
+  When I enter username "invalid_user" and password "wrong_password"                 ✓
+  And I click the login button                                                       ✓
+  Then I should see an error message containing "Username and password do not match" ✓
+
+Scenario: Inventory page displays all products
+  Given I am on the SauceDemo login page                            ✓
+  When I enter username "standard_user" and password "secret_sauce" ✓
+  And I click the login button                                      ✓
+  Then I should see 6 products on the inventory page                ✓
+
+Scenario: Add a single item to the cart
+  Given I am on the SauceDemo login page                            ✓
+  When I enter username "standard_user" and password "secret_sauce" ✓
+  And I click the login button                                      ✓
+  When I add the "Sauce Labs Backpack" to the cart                  ✓
+  Then the cart badge should show "1"                               ✓
+
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
+BUILD SUCCESS (25s)
+```
+
+### Cucumber HTML Report
+
+A detailed Cucumber HTML report is generated after each test run with step-by-step results, timing, and screenshots on failure.
+
+[View Sample Report](docs/reports/cucumber-report.html)
 
 ## BDD Feature File Examples
 
@@ -155,18 +208,18 @@ mvn allure:serve
 
 ### Web BDD Scenarios (SauceDemo)
 
-| Feature | Scenario | Tags |
-|---------|----------|------|
-| Login | Successful login with valid credentials | @smoke @positive |
-| Login | Login fails with locked out user | @negative |
-| Login | Login fails with invalid credentials | @negative |
-| Login | Login fails when username is empty | @negative |
-| Login | Login fails when password is empty | @negative |
-| Login | Login with multiple valid users (Scenario Outline) | @smoke @positive |
-| Inventory | Inventory page displays all products | @smoke |
-| Inventory | Add a single item to the cart | @cart |
-| Inventory | Add multiple items to the cart | @cart |
-| Inventory | Remove an item from the cart | @cart |
+| Feature | Scenario | Tags | Status |
+|---------|----------|------|--------|
+| Login | Successful login with valid credentials | @smoke @positive | Passing |
+| Login | Login fails with locked out user | @negative | Passing |
+| Login | Login fails with invalid credentials | @negative | Passing |
+| Login | Login fails when username is empty | @negative | Passing |
+| Login | Login fails when password is empty | @negative | Passing |
+| Login | Login with multiple valid users (Scenario Outline x3) | @smoke @positive | Passing |
+| Inventory | Inventory page displays all products | @smoke | Passing |
+| Inventory | Add a single item to the cart | @cart | Passing |
+| Inventory | Add multiple items to the cart | @cart | Passing |
+| Inventory | Remove an item from the cart | @cart | Passing |
 
 ### Mobile BDD Scenarios (SauceLabs Sample App)
 
@@ -178,15 +231,17 @@ mvn allure:serve
 
 ## CI/CD
 
+![CI](https://github.com/michaelchuaQA/selenium-appium-framework/actions/workflows/web-tests.yml/badge.svg)
+
 GitHub Actions runs web tests automatically on every push and pull request. See `.github/workflows/web-tests.yml`.
 
 The pipeline:
 1. Sets up JDK 17
 2. Caches Maven dependencies
 3. Installs Chrome
-4. Runs the web test suite
-5. Generates and uploads Allure report as artifact
+4. Runs BDD smoke tests + standard TestNG tests
+5. Uploads test reports as downloadable artifacts
 
 ## Author
 
-**Michael Chua** — QA Automation Engineer | [GitHub](https://github.com/michaelchuaQA)
+**Michael Chua** -- QA Automation Engineer | [GitHub](https://github.com/michaelchuaQA)
