@@ -22,6 +22,7 @@
         <webdrivermanager.version>5.8.0</webdrivermanager.version>
         <allure.version>2.27.0</allure.version>
         <aspectj.version>1.9.22</aspectj.version>
+        <cucumber.version>7.18.0</cucumber.version>
     </properties>
 
     <dependencies>
@@ -53,6 +54,27 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
             <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>

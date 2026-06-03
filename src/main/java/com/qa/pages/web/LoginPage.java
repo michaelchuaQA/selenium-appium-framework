@@ -24,12 +24,27 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    @Step("Login with username: {username}")
-    public InventoryPage login(String username, String password) {
+    @Step("Enter username: {username}")
+    public void enterUsername(String username) {
         type(usernameField, username);
+    }
+
+    @Step("Enter password")
+    public void enterPassword(String password) {
         type(passwordField, password);
+    }
+
+    @Step("Click login button")
+    public InventoryPage clickLogin() {
         click(loginButton);
         return new InventoryPage(driver);
+    }
+
+    @Step("Login with username: {username}")
+    public InventoryPage login(String username, String password) {
+        enterUsername(username);
+        enterPassword(password);
+        return clickLogin();
     }
 
     @Step("Get error message text")
