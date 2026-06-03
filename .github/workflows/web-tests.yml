@@ -31,8 +31,8 @@ jobs:
         with:
           chrome-version: stable
 
-      - name: Run BDD Web Tests
-        run: mvn clean test -DsuiteXmlFile=src/test/resources/testng-bdd-web.xml
+      - name: Run BDD Smoke Tests
+        run: mvn clean test -DsuiteXmlFile=src/test/resources/testng-bdd-web.xml -Dcucumber.filter.tags="@smoke"
 
       - name: Run Standard Web Tests
         if: success()
