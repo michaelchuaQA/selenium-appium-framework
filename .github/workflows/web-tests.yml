@@ -31,18 +31,18 @@ jobs:
         with:
           chrome-version: stable
 
-      - name: Run Web Tests
-        run: mvn clean test -DsuiteXmlFile=src/test/resources/testng-web.xml
+      - name: Run BDD Web Tests
+        run: mvn clean test -DsuiteXmlFile=src/test/resources/testng-bdd-web.xml
 
-      - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.9
-        if: always()
-        with:
-          allure_results: target/allure-results
+      - name: Run Standard Web Tests
+        if: success()
+        run: mvn test -DsuiteXmlFile=src/test/resources/testng-web.xml
 
-      - name: Upload Allure Report
+      - name: Upload Test Reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: allure-report
-          path: allure-history
+          name: test-reports
+          path: |
+            target/surefire-reports/
+            target/cucumber-reports/
