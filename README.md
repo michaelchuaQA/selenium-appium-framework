@@ -14,7 +14,7 @@ A comprehensive test automation framework for **web** and **mobile** testing usi
 |-----------|------------|
 | Language | Java 17 |
 | Web Automation | Selenium 4 |
-| Mobile Automation | Appium 9 (UiAutomator2 / XCUITest) |
+| Mobile Automation | Appium 3 (UiAutomator2 / XCUITest) |
 | BDD Framework | Cucumber 7 (Gherkin) |
 | Test Framework | TestNG |
 | Build Tool | Maven |
